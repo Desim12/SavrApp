@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.example.summary.FirstFragment"
-        android:label="@string/first_fragment_label"
+        android:name="com.example.summary.LoginFragment"
+        android:label="@string/login_screen_label"
         tools:layout="@layout/fragment_first">
 
         <action
