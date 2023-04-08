@@ -2,7 +2,7 @@ package com.example.summary.Activities;
 
 import android.os.Bundle;
 
-import com.example.summary.Fragment.LoginFragment;
+import com.example.summary.Fragment.Login.LoginFragment;
 import com.example.summary.R;
 import com.google.android.material.snackbar.Snackbar;
 

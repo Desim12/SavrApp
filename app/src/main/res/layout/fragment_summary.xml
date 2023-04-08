@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bggreen"
+    tools:context=".Fragment.Summary.SummaryFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/top_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="30dp"
+                    android:layout_marginLeft="100dp"
+                    android:layout_marginRight="80dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/bggreen"
+                    android:text="Summary">
+                </TextView>
+                <ImageButton
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:background="#72bb53"
+                    android:src="@drawable/menu_button">
+
+                </ImageButton>
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageButton
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:background="@color/bggreen"
+                    android:src="@drawable/bills"
+                    android:padding="20dp">
+
+                </ImageButton>
+                <ImageButton
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:background="@color/bggreen"
+                    android:src="@drawable/home"
+                    android:padding="20dp"
+                    android:layout_marginHorizontal="30dp">
+
+                </ImageButton>
+                <ImageButton
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:background="@color/bggreen"
+                    android:src="@drawable/resources"
+                    android:padding="20dp">
+
+                </ImageButton>
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+    <TextView
+        android:id="@+id/hello_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.073" />
+
+    <TextView
+        android:id="@+id/budget_fulfillment_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="92dp"
+        android:layout_marginEnd="24dp"
+        android:text="This Month's Spending                           This Month's Budget"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hello_text"
+        app:layout_constraintTop_toTopOf="@+id/top_toolbar" />
+
+    <TextView
+        android:id="@+id/sum_of_charges"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="156dp"
+        android:layout_marginEnd="292dp"
+        android:text="dsadasdsadas"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hello_text"
+        app:layout_constraintTop_toTopOf="@+id/top_toolbar" />
+
+    <TextView
+        android:id="@+id/budget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="152dp"
+        android:layout_marginEnd="56dp"
+        android:text="dsadasdsadas"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hello_text"
+        app:layout_constraintTop_toTopOf="@+id/top_toolbar" />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/new_charge"
+        tools:layout_editor_absoluteX="0dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/total_charges"
+                android:layout_width="150dp"
+                android:layout_height="160dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="228dp"
+                app:layout_constraintBottom_toTopOf="@id/back_to_login"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </LinearLayout>
+
+    </HorizontalScrollView>
+    <EditText
+        android:id="@+id/new_charge_field"
+        android:layout_width="201dp"
+        android:layout_height="48dp"
+        android:hint="Enter new charges"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.138"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.499" />
+
+    <Button
+        android:id="@+id/new_charge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.131"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.582" />
+
+    <Button
+        android:id="@+id/back_to_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Log out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.402"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.888" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

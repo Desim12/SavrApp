@@ -1,4 +1,4 @@
-package com.example.summary.Fragment;
+package com.example.summary.Fragment.Login;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.summary.CRUD;
 import com.example.summary.databinding.FragmentLoginBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
