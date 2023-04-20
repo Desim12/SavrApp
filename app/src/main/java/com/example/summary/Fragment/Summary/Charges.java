@@ -45,7 +45,7 @@ public class Charges implements RecyclerViewAdapter.OnItemClickListener, Recycle
 
 
 
-    public Charges(View[] views, Map<String, Map<String, Long>> charges, Map<String, Long> categoryBudgets, Context context){
+    public Charges(View[] views, ArrayList<Object[]> dbData, Map<String, Long> categoryBudgets, Context context){
         // Single line inits
         listOfCharges = (RecyclerView) views[0];
         listOfBudgets = (RecyclerView) views[3];
@@ -53,8 +53,7 @@ public class Charges implements RecyclerViewAdapter.OnItemClickListener, Recycle
         chart1 = (PieChart) views[2];
         this.categoryBudgets = categoryBudgets;
         sumOfCharges = 0L;
-        dbData = new ArrayList<>();
-        convertToList(charges);
+        this.dbData = dbData;
         // Initialize listOfCharges and components;
         listOfCharges.setLayoutManager(new LinearLayoutManager(context));
         listOfBudgets.setLayoutManager(new LinearLayoutManager(context));
@@ -101,14 +100,6 @@ public class Charges implements RecyclerViewAdapter.OnItemClickListener, Recycle
                     listOfCharges.setVisibility(View.VISIBLE);
     }
 
-    private void convertToList(Map<String, Map<String, Long>> data){
-        for (Map.Entry<String, Map<String, Long>> category: data.entrySet()){
-            for (Map.Entry<String, Long> nameAmount: category.getValue().entrySet()){
-                dbData.add(new Object[]{category.getKey(), nameAmount.getKey(), nameAmount.getValue()});
-            }
-        }
-    }
-
     // inits categorySpending and sumOfCharges
     private void initSpending(){
         for (Object[] charge: dbData){
@@ -126,8 +117,8 @@ public class Charges implements RecyclerViewAdapter.OnItemClickListener, Recycle
         categorySpending.put((String) newEntry[0], categorySpending.get(newEntry[0]) + Long.parseLong((String)newEntry[2]));
         sumOfCharges += Long.parseLong((String)newEntry[2]);
         sumOfChargesView.setText(sumOfCharges.toString());
-        chart1.invalidate();
         initBudget();
+        updatePieCharts();
     }
 
     private void initBudget() {
