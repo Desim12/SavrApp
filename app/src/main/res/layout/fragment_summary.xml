@@ -10,76 +10,81 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/top_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/horizontal_7"
         app:layout_constraintTop_toTopOf="parent">
+
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="30dp"
-                    android:layout_marginLeft="100dp"
-                    android:layout_marginRight="80dp"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/bggreen"
-                    android:text="Summary">
-                </TextView>
-                <ImageButton
-                    android:layout_width="100dp"
-                    android:layout_height="50dp"
-                    android:background="#72bb53"
-                    android:src="@drawable/menu_button">
 
-                </ImageButton>
-            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Summary"
+                android:textAlignment="center"
+                android:textColor="@color/bggreen"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:background="#72bb53"
+                android:paddingHorizontal="20dp"
+                android:src="@drawable/menu_button"></ImageButton>
 
         </androidx.appcompat.widget.Toolbar>
+
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent">
+
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <ImageButton
-                    android:layout_width="100dp"
-                    android:layout_height="50dp"
-                    android:background="@color/bggreen"
-                    android:src="@drawable/bills"
-                    android:padding="20dp">
 
-                </ImageButton>
                 <ImageButton
                     android:layout_width="100dp"
                     android:layout_height="50dp"
                     android:background="@color/bggreen"
-                    android:src="@drawable/home"
                     android:padding="20dp"
-                    android:layout_marginHorizontal="30dp">
+                    android:src="@drawable/bills">
 
                 </ImageButton>
+
+                <ImageButton
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="30dp"
+                    android:background="@color/bggreen"
+                    android:padding="20dp"
+                    android:src="@drawable/home">
+
+                </ImageButton>
+
                 <ImageButton
                     android:layout_width="100dp"
                     android:layout_height="50dp"
                     android:background="@color/bggreen"
-                    android:src="@drawable/resources"
-                    android:padding="20dp">
+                    android:padding="20dp"
+                    android:src="@drawable/resources">
 
                 </ImageButton>
             </LinearLayout>
 
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
+
     <TextView
         android:id="@+id/hello_text"
         android:layout_width="wrap_content"
@@ -92,84 +97,123 @@
         app:layout_constraintVertical_bias="0.073" />
 
     <TextView
-        android:id="@+id/budget_fulfillment_text"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="92dp"
-        android:layout_marginEnd="24dp"
-        android:text="This Month's Spending                           This Month's Budget"
+        android:fontFamily="georgia"
+        android:text="Spending"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_15"
+        app:layout_constraintEnd_toEndOf="@id/vertical_50"
+        app:layout_constraintStart_toStartOf="@id/vertical_5" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="georgia"
+        android:text="Budgets"
+        android:textAlignment="center"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_15"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hello_text"
-        app:layout_constraintTop_toTopOf="@+id/top_toolbar" />
+        app:layout_constraintStart_toStartOf="@id/vertical_50" />
 
     <TextView
         android:id="@+id/sum_of_charges"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="156dp"
-        android:layout_marginEnd="292dp"
-        android:text="dsadasdsadas"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hello_text"
-        app:layout_constraintTop_toTopOf="@+id/top_toolbar" />
 
-    <TextView
-        android:id="@+id/budget"
-        android:layout_width="wrap_content"
+        android:text="dsadasdsadas"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/table_titles" />
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pie_chart_1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="0dp"
+        app:layout_constraintBottom_toTopOf="@id/horizontal_50"
+        app:layout_constraintEnd_toEndOf="@id/vertical_55"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/horizontal_15" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/budget_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/horizontal_50"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/vertical_55"
+        app:layout_constraintTop_toTopOf="@id/horizontal_20" />
+
+
+    <TableLayout
+        android:id="@+id/table_titles"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="152dp"
-        android:layout_marginEnd="56dp"
-        android:text="dsadasdsadas"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hello_text"
-        app:layout_constraintTop_toTopOf="@+id/top_toolbar" />
+        android:background="@color/leafgreen"
+        android:padding="3dp"
+        app:layout_constraintBottom_toTopOf="@id/total_charges_view"
+        app:layout_constraintStart_toStartOf="@+id/total_charges_view">
 
-    <HorizontalScrollView
+        <TableRow>
+
+            <TextView
+                android:layout_height="match_parent"
+                android:layout_weight="0.33"
+                android:gravity="center"
+                android:text="Category"
+                android:textColor="@color/bggreen"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_height="match_parent"
+                android:layout_weight="0.33"
+                android:gravity="center"
+                android:text="Name"
+                android:textColor="@color/bggreen"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_height="match_parent"
+                android:layout_weight="0.33"
+                android:gravity="center"
+                android:text="Amount"
+                android:textColor="@color/bggreen"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/new_charge_button"
+                android:layout_width="55dp"
+                android:layout_height="35dp"
+                android:background="@color/evergreen"
+                android:src="@drawable/new_charge" />
+
+        </TableRow>
+    </TableLayout>
+
+    <ScrollView
+        android:id="@+id/total_charges_view"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/new_charge"
-        tools:layout_editor_absoluteX="0dp"
-        >
-        <LinearLayout
+        android:background="@drawable/charge_list_border"
+        android:padding="3dp"
+        app:layout_constraintTop_toTopOf="@id/horizontal_62"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteX="0dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/total_charges"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </ScrollView>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/total_charges"
-                android:layout_width="150dp"
-                android:layout_height="160dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="228dp"
-                app:layout_constraintBottom_toTopOf="@id/back_to_login"
-                app:layout_constraintEnd_toEndOf="parent" />
-        </LinearLayout>
-
-    </HorizontalScrollView>
-    <EditText
-        android:id="@+id/new_charge_field"
-        android:layout_width="201dp"
-        android:layout_height="48dp"
-        android:hint="Enter new charges"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.138"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
-
-    <Button
-        android:id="@+id/new_charge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.131"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.582" />
 
     <Button
         android:id="@+id/back_to_login"
@@ -182,6 +226,90 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.888" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal_50"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical_50"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal_25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal_15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical_60"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.6" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical_80"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.80" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal_7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.07" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal_20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.20" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal_82"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.82" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical_55"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.55" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal_62"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.62" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

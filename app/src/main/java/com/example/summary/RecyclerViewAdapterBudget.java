@@ -1,7 +1,5 @@
 package com.example.summary;
 
-import android.content.ClipData;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>{
+public class RecyclerViewAdapterBudget extends RecyclerView.Adapter<RecyclerViewAdapterBudget.RecyclerViewHolder>{
     private ArrayList<Object[]> itemList;
     private OnItemClickListener listener;
-    public RecyclerViewAdapter(ArrayList<Object[]> itemList){
+    public RecyclerViewAdapterBudget(ArrayList<Object[]> itemList){
         this.listener = listener;
         this.itemList = itemList;
     }
@@ -31,7 +29,7 @@ public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerViewAdapt
     @NonNull
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_budget, parent, false);
         return new RecyclerViewHolder(itemView);
     }
 
@@ -59,9 +57,9 @@ public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerViewAdapt
 
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
-            category = itemView.findViewById(R.id.category);
-            name = itemView.findViewById(R.id.name);
-            amount = itemView.findViewById(R.id.amount);
+            category = itemView.findViewById(R.id.category_budget);
+            name = itemView.findViewById(R.id.name_budget);
+            amount = itemView.findViewById(R.id.amount_budget);
             itemView.setOnClickListener(new View.OnClickListener() {
 
                 @Override

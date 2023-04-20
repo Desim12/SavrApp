@@ -53,6 +53,25 @@ public class LoginFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        email = "marashdehronnie@gmail.com";
+        password = "password";
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    Log.d("login", "signInWithEmail:success");
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    mCallback.onSuccessfulLogin(user);
+                    //updateUI(user);
+//                            NavHostFragment.findNavController(LoginFragment.this)
+//                                    .navigate(R.id.action_FirstFragment_to_SecondFragment);
+                } else {
+                    Log.w("Login", "signInWithEmail:Failure", task.getException());
+                    binding.incorrect.setText("Incorrect username or password. Please try again.");
+                    return;
+                }
+            }
+        });
 
         binding.buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
