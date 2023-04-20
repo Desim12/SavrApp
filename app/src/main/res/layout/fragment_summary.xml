@@ -16,7 +16,8 @@
 
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/evergreen">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -47,7 +48,8 @@
 
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/evergreen">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -88,20 +90,23 @@
     <TextView
         android:id="@+id/hello_text"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="0dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="@color/evergreen"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_15"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.073" />
+        app:layout_constraintTop_toTopOf="@id/horizontal_7" />
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="georgia"
+        android:textColor="@color/evergreen"
         android:text="Spending"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/horizontal_15"
         app:layout_constraintEnd_toEndOf="@id/vertical_50"
@@ -113,11 +118,23 @@
         android:fontFamily="georgia"
         android:text="Budgets"
         android:textAlignment="center"
-        android:textSize="18dp"
+        android:textSize="18sp"
+        android:textColor="@color/evergreen"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/horizontal_15"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/vertical_50" />
+
+    <ImageButton
+        android:id="@+id/edit_budget_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/evergreen"
+        android:padding="1dp"
+        android:layout_marginRight="9dp"
+        android:src="@drawable/new_charge"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/horizontal_15"/>
 
     <TextView
         android:id="@+id/sum_of_charges"
@@ -260,7 +277,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15" />
+        app:layout_constraintGuide_percent="0.1504788" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/vertical_60"

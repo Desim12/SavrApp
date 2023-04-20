@@ -139,6 +139,13 @@ public class Charges implements RecyclerViewAdapter.OnItemClickListener, Recycle
         listOfBudgets.setVisibility(View.VISIBLE);
     }
 
+    public void updateBudgets(Map<String, String> newBudget){
+        for (Map.Entry<String, String> edit: newBudget.entrySet()){
+            categoryBudgets.put(edit.getKey(), Long.parseLong(edit.getValue()));
+        }
+        initBudget();
+    }
+
     private void deleteListEntry(int index) {
         // TODO: Implement deleting entry for new database layout
 /*        dbData.remove(index);

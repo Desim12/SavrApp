@@ -28,6 +28,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -39,9 +40,9 @@ public class SummaryFragment extends Fragment {
     private Context context;
     private Charges chargeSummary;
     FirebaseFirestore db;
-    View newChargePopup;
-    String newChargeCategory, newChargeName, newChargeAmount;
-    PopupWindow popupWindow;
+    View newChargePopup, newBudgetPopup;
+    String newChargeCategory, newChargeName, newChargeAmount, newBudgetCategory, newBudgetAmount;
+    PopupWindow popupCharge, popupBudget;
     PieChart chart1;
     View[] views;
 
@@ -56,11 +57,17 @@ public class SummaryFragment extends Fragment {
         binding = FragmentSummaryBinding.inflate(inflater, container, false);
 
         newChargePopup = inflater.inflate(R.layout.new_charge_entry, null);
-        popupWindow = new PopupWindow(context);
-        popupWindow.setContentView(newChargePopup);
-        popupWindow.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
-        popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-        popupWindow.setFocusable(true);
+        newBudgetPopup = inflater.inflate(R.layout.new_budget_entry, null);
+        popupBudget = new PopupWindow(context);
+        popupCharge = new PopupWindow(context);
+        popupCharge.setContentView(newChargePopup);
+        popupBudget.setContentView(newBudgetPopup);
+        popupCharge.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+        popupBudget.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+        popupCharge.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        popupBudget.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        popupCharge.setFocusable(true);
+        popupBudget.setFocusable(true);
 
         MainActivity activity = (MainActivity) getActivity();
         assert activity != null;
@@ -92,7 +99,7 @@ public class SummaryFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.helloText.setText("Hello, " + user.getDisplayName() + "!");
+        binding.helloText.setText("Welcome back, " + user.getDisplayName() + "!");
         binding.backToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,7 +108,7 @@ public class SummaryFragment extends Fragment {
             }
         });
 
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+        popupCharge.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
                 EditText cat = newChargePopup.findViewById(R.id.category);
@@ -129,12 +136,35 @@ public class SummaryFragment extends Fragment {
                 });
             }
         });
+
+        popupBudget.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                EditText cat = newBudgetPopup.findViewById(R.id.category);
+                EditText amount = newBudgetPopup.findViewById(R.id.amount);
+                newBudgetCategory = cat.getText().toString();
+                newBudgetAmount = amount.getText().toString();
+                cat.setText("");
+                amount.setText("");
+                Map<String, String> map = new HashMap<>();
+                map.put(newBudgetCategory, newBudgetAmount);
+                if (!Objects.equals(newBudgetCategory, "") && !Objects.equals(newBudgetAmount, "")) chargeSummary.updateBudgets(map);
+            }
+        });
+
+        binding.editBudgetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupBudget.showAsDropDown(view);
+            }
+        });
         binding.newChargeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                popupWindow.showAsDropDown(view);
+                popupCharge.showAsDropDown(view);
             }
         });
+
     }
 
     @Override
