@@ -24,8 +24,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Map;
 import java.util.Objects;
 
 public class SummaryFragment extends Fragment {
@@ -40,6 +42,9 @@ public class SummaryFragment extends Fragment {
     String newChargeCategory, newChargeName, newChargeAmount;
     PopupWindow popupWindow;
     PieChart chart1, chart2, chart3;
+    Map<String, Map<String, Long>> charges;
+    Map<String, Long> categoryBudgets;
+
     View[] views;
 
     @Override
@@ -64,7 +69,19 @@ public class SummaryFragment extends Fragment {
         this.user = activity.getUser();
         chart1 = binding.pieChart1;
         views = new View[]{binding.totalCharges, binding.sumOfCharges, chart1, binding.budgetList, chart3};
-        chargeSummary = new Charges(views, this.user, context, crud);
+        crud.readDocument("users", user.getUid(), new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    charges = (Map<String, Map<String, Long>>) task.getResult().getData().get("Charges");
+                    categoryBudgets = (Map<String, Long>) task.getResult().getData().get("categoryBudgets");
+                    chargeSummary = new Charges(views, charges, categoryBudgets, context);
+                }
+                else {
+                    Log.e("Error", "Query Failed", task.getException());
+                }
+            }
+        });
         return binding.getRoot();
     }
 
@@ -95,6 +112,17 @@ public class SummaryFragment extends Fragment {
                 if (!Objects.equals(newChargeName, "") && !Objects.equals(newChargeCategory, "") && !Objects.equals(newChargeAmount, "")){
                     chargeSummary.updateChargesList(new Object[]{newChargeCategory, newChargeName, newChargeAmount});
                 }
+                crud.updateDocument("users", user.getUid(), chargeSummary.convertForDatabase()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            Log.d("Upload", "Upload was successful");
+                        }
+                        else{
+                            Log.e("Upload", "Upload unsuccessful", task.getException());
+                        }
+                    }
+                });
             }
         });
         binding.newChargeButton.setOnClickListener(new View.OnClickListener() {

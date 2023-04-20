@@ -38,30 +38,11 @@ public class CRUD {
         });
     }
 
-    // Create a new document with a custom ID
-    public Task<Void> createDocumentWithID(String collectionName, String documentID, Map<String, Object> data) {
-        CollectionReference collectionRef = db.collection(collectionName);
-        DocumentReference docRef = collectionRef.document(documentID);
-        return docRef.set(data);
-    }
-
     // Read a single document
-    public void readDocument(String collectionName, String documentID, OnCompleteListener<DocumentSnapshot> listener){
+    public void readDocument(String collectionName, String documentID, OnCompleteListener<DocumentSnapshot> listener) {
         DocumentReference docRef = db.collection(collectionName).document(documentID);
         Task<DocumentSnapshot> task = docRef.get();
         task.addOnCompleteListener(listener);
-    }
-
-    // Read all documents in a collection
-    public Task<List<DocumentSnapshot>> readAllDocuments(String collectionName) {
-        CollectionReference collectionRef = db.collection(collectionName);
-        return  collectionRef.get().continueWith(task -> {
-            if (task.isSuccessful()) {
-                return task.getResult().getDocuments();
-            } else {
-                throw task.getException();
-            }
-        });
     }
 
     // Update a document

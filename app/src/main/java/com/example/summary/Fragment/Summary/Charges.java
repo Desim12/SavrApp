@@ -31,30 +31,30 @@ import java.util.Map;
 public class Charges implements RecyclerViewAdapter.OnItemClickListener, RecyclerViewAdapterBudget.OnItemClickListener {
 
     RecyclerView listOfCharges, listOfBudgets;
-    FirebaseUser user;
-    private CRUD crud;
     private RecyclerViewAdapter adapter;
     private RecyclerViewAdapterBudget budgetAdapter;
     private RecyclerViewAdapterBudget.OnItemClickListener listenerBudget;
     private RecyclerViewAdapter.OnItemClickListener listener;
     ArrayList<Object[]> dbData, budgetData;
-    TextView sumOfCharges;
+    TextView sumOfChargesView;
+    Long sumOfCharges;
     public Map<String, Long> categoryBudgets;
     public Map<String, Long> categorySpending;
-    PieChart chart1, chart2, chart3;
+    PieChart chart1;
     // view[0] = recyclerview totalcharges, 1 = textview sumofcharges, 2-4 = piecharts 1-3
-    View[] views;
 
 
 
-    public Charges(View[] views, FirebaseUser user, Context context, CRUD crud){
+    public Charges(View[] views, Map<String, Map<String, Long>> charges, Map<String, Long> categoryBudgets, Context context){
         // Single line inits
-        this.user = user;
-        this.crud = crud;
         listOfCharges = (RecyclerView) views[0];
         listOfBudgets = (RecyclerView) views[3];
-        this.sumOfCharges = (TextView) views[1];
+        this.sumOfChargesView = (TextView) views[1];
         chart1 = (PieChart) views[2];
+        this.categoryBudgets = categoryBudgets;
+        sumOfCharges = 0L;
+        dbData = new ArrayList<>();
+        convertToList(charges);
         // Initialize listOfCharges and components;
         listOfCharges.setLayoutManager(new LinearLayoutManager(context));
         listOfBudgets.setLayoutManager(new LinearLayoutManager(context));
@@ -62,33 +62,20 @@ public class Charges implements RecyclerViewAdapter.OnItemClickListener, Recycle
         listOfBudgets.setVisibility(View.GONE);
         listener = this;
         listenerBudget = this;
-        categorySpending = new HashMap<String, Long>();
+        categorySpending = new HashMap<>();
         initAdapter();
+        initSpending();
+        initBudget();
     }
 
     public void updateChargesList(Object[] newEntry) {
-        Log.d("User id", user.getUid());
-        crud.readDocument("users", user.getUid(), new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()){
-                    Long tmp = Long.parseLong("0");
-                    Map<String, Map<String, Long>> userDoc = (Map<String, Map<String, Long>>) task.getResult().getData().get("Charges");
-                    if (userDoc.containsKey(newEntry[0])) userDoc.get(newEntry[0]).put((String) newEntry[1], Long.parseLong((String)newEntry[2]));
-                    dbData.add(newEntry);
-                    crud.updateDocument("users", user.getUid(), convertForDatabase());
-                    adapter.updateData(dbData);
-                    adapter.notifyItemInserted(dbData.size()-1);
-                    updateSpending(userDoc);
-                }
-                else {
-                    Log.e("Error", "Query Failed", task.getException());
-                }
-            }
-        });
+        dbData.add(newEntry);
+        adapter.updateData(dbData);
+        adapter.notifyItemInserted(dbData.size()-1);
+        updateSpending(newEntry);
     }
 
-    private Map<String, Object> convertForDatabase(){
+    public Map<String, Object> convertForDatabase(){
         Map<String, Object> finalMap = new HashMap<>();
         Map<String, Map<String, Long>> chargesMap = new HashMap<>();
 
@@ -108,42 +95,38 @@ public class Charges implements RecyclerViewAdapter.OnItemClickListener, Recycle
     }
 
     private void initAdapter() {
-        dbData = new ArrayList<>();
-        crud.readDocument("users", user.getUid(), new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()){
-                    Map<String, Map<String, Long>> data = (Map<String, Map<String, Long>>) task.getResult().getData().get("Charges");
-                    categoryBudgets = (Map<String, Long>) task.getResult().getData().get("categoryBudgets");
-                    updateSpending(data);
                     adapter = new RecyclerViewAdapter(dbData);
                     adapter.setListener(listener);
                     listOfCharges.setAdapter(adapter);
                     listOfCharges.setVisibility(View.VISIBLE);
-
-                }
-                else{
-                    Log.e("DatabaseQuery", "Query Failed.", task.getException());
-                }
-            }
-        });
     }
 
-    // Updates categorySpending and sumOfCharges
-    private void updateSpending(Map<String, Map<String, Long>> data){
-        Long tmp = Long.parseLong("0");
-        for (Map.Entry<String, Map<String, Long>> category: data.entrySet()
-        ) {
-            String categoryName = category.getKey();
-            categorySpending.put(categoryName, Long.parseLong("0"));
-            for (Map.Entry<String, Long> charge: category.getValue().entrySet()){
-                categorySpending.put(categoryName, categorySpending.get(categoryName) + charge.getValue());
-                tmp += charge.getValue();
-                dbData.add(new Object[]{categoryName, charge.getKey(), charge.getValue()});
+    private void convertToList(Map<String, Map<String, Long>> data){
+        for (Map.Entry<String, Map<String, Long>> category: data.entrySet()){
+            for (Map.Entry<String, Long> nameAmount: category.getValue().entrySet()){
+                dbData.add(new Object[]{category.getKey(), nameAmount.getKey(), nameAmount.getValue()});
             }
-            sumOfCharges.setText(tmp.toString());
         }
+    }
+
+    // inits categorySpending and sumOfCharges
+    private void initSpending(){
+        for (Object[] charge: dbData){
+            if (!categorySpending.containsKey(charge[0])){
+                categorySpending.put(charge[0].toString(), 0L);
+            }
+            categorySpending.put(charge[0].toString(), categorySpending.get(charge[0]) + Long.parseLong(charge[2].toString()));
+            sumOfCharges += Long.parseLong(charge[2].toString());
+        }
+        sumOfChargesView.setText(sumOfCharges.toString());
         updatePieCharts();
+    }
+
+    private void updateSpending(Object[] newEntry){
+        categorySpending.put((String) newEntry[0], categorySpending.get(newEntry[0]) + Long.parseLong((String)newEntry[2]));
+        sumOfCharges += Long.parseLong((String)newEntry[2]);
+        sumOfChargesView.setText(sumOfCharges.toString());
+        chart1.invalidate();
         initBudget();
     }
 
@@ -158,9 +141,6 @@ public class Charges implements RecyclerViewAdapter.OnItemClickListener, Recycle
                     budgetData.add(new Object[]{budget.getKey(), categorySpending.get(budget.getKey()), budget.getValue()});
                 }
             }
-        }
-        for (Object[] element : budgetData){
-            Log.d("", element[0].toString() +", "+element[1].toString()+", "+element[2].toString()+"\n");
         }
         budgetAdapter = new RecyclerViewAdapterBudget(budgetData);
         budgetAdapter.setListener(listenerBudget);
@@ -206,7 +186,7 @@ public class Charges implements RecyclerViewAdapter.OnItemClickListener, Recycle
         chart1Data.setValueTextSize(12f);
         chart1.getLegend().setEnabled(false);
         chart1.setData(new PieData(chart1Data));
-        chart1.setCenterText(sumOfCharges.getText()+"\nTotal Spending");
+        chart1.setCenterText(sumOfChargesView.getText()+"\nTotal Spending");
         chart1.invalidate();
         chart1.animateXY(1000, 1000);
     }

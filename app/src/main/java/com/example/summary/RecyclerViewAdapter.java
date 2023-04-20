@@ -44,7 +44,6 @@ public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerViewAdapt
         holder.category.setText(data[0].toString());
         holder.name.setText(data[1].toString());
         holder.amount.setText(data[2].toString());
-
     }
 
     @Override
