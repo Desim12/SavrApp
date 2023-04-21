@@ -87,6 +87,7 @@ public class SummaryFragment extends Fragment {
         });
         return binding.getRoot();
     }
+
     public ArrayList<Object[]> convertToList(Map<String, Map<String, Long>> data){
         ArrayList<Object[]> finalList = new ArrayList<>();
         for (Map.Entry<String, Map<String, Long>> category: data.entrySet()){
